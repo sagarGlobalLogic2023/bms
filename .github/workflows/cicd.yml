@@ -31,6 +31,6 @@ jobs:
       - name: Pull Image from docker hub
         run: docker pull sagaarcasm/bms:latest
       - name: Delete old container
-        run: docker rm -f springboot-example-container
+        run: docker rm -f bms-container
       - name: Run docker container
-        run: docker run -d -p 8080:8080 --name springboot-example-container sagaarcasm/bms
+        run: docker run -d -p 8080:8080 --name bms-container sagaarcasm/bms
