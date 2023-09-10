@@ -30,9 +30,9 @@ public class MovieController {
     }
 
     @GetMapping("Get_All_Movies")
-    public ResponseEntity<List<MovieResponceDto>> getMovies(){
+    public ResponseEntity<String> getMovies(){
         List<MovieResponceDto> movies=movieService.getMovies();
-        return new ResponseEntity<>(movies,HttpStatus.OK);
+        return new ResponseEntity<>("cicd working",HttpStatus.OK);
     }
 
 
