@@ -29,8 +29,8 @@ jobs:
     runs-on: [aws-ec2]
     steps:
       - name: Pull Image from docker hub
-        run: docker pull sagaarcasm/bms:latest
+        run: sudo docker pull sagaarcasm/bms:latest
       - name: Delete old container
-        run: docker rm -f bms-container
+        run: sudo docker rm -f bms-container
       - name: Run docker container
-        run: docker run -d -p 8080:8080 --name bms-container sagaarcasm/bms
+        run: sudo docker run -d -p 8080:8080 --name bms-container sagaarcasm/bms
