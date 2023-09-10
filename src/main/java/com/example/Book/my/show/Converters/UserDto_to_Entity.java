@@ -8,7 +8,8 @@ public class UserDto_to_Entity {
    public static userEntity converterUserDtoToEntity(userDTO userDTO){
        userEntity user= userEntity.builder()
                .name(userDTO.getName())
-               .modile(userDTO.getModile())
+               .password(userDTO.getPassword())
+               .email(userDTO.getEmail())
                .build();
        return user;
    }

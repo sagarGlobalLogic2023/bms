@@ -20,23 +20,29 @@ import java.util.List;
 @AllArgsConstructor
 public class userEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-@Column(nullable = false,unique = true)
-    private String name;
+	    @Id
+	    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	    private int id;
+	    
+	    @Column(nullable = false,unique = true, length=255)
+	    private String name;
 
-    private String modile;
-    @CreationTimestamp
-    @Temporal(value = TemporalType.TIMESTAMP)
-    private Date createdOn;
+	    @Column(nullable= false, length=255)
+	    private String email;
+	    
+	    @Column(nullable=false, length=255)
+	    private String password;
+	    
+	    @CreationTimestamp
+	    @Temporal(value = TemporalType.TIMESTAMP)
+	    private Date createdOn;
 
-    @UpdateTimestamp
-    @Temporal(value = TemporalType.TIMESTAMP)
-    private Date updatedOn;
+	    @UpdateTimestamp
+	    @Temporal(value = TemporalType.TIMESTAMP)
+	    private Date updatedOn;
 
-    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
-    private List<TicketEntity> Tickets;
+	    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+	    private List<TicketEntity> Tickets;
 
 
 }

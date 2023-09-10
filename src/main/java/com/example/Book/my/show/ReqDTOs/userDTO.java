@@ -8,10 +8,15 @@ import javax.persistence.Column;
 
 @Data
 public class userDTO {
-    @Column(nullable = false)
-      private String name;
-    @Column(nullable = false,unique = true)
-      private String modile;
+   
+	 @Column(nullable = false,unique = true, length=255)
+	    private String name;
+
+	    @Column(nullable= false, length=255)
+	    private String email;
+	    
+	    @Column(nullable=false, length=255)
+	    private String password;
 
     }
 
