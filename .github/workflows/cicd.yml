@@ -20,17 +20,17 @@ jobs:
       - name: Login to docker hub
         run: docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSWORD}}
       - name: Build docker image
-        run: docker build -t sagar/bms .
+        run: docker build -t sagaarcasm/bms .
       - name: Publish image to docker hub
-        run: docker push sagar/bms:latest
+        run: docker push sagaarcasm/bms:latest
 
   deploy:
     needs: build
     runs-on: [aws-ec2]
     steps:
       - name: Pull Image from docker hub
-        run: docker pull sagar/bms:latest
+        run: docker pull sagaarcasm/bms:latest
       - name: Delete old container
         run: docker rm -f springboot-example-container
       - name: Run docker container
-        run: docker run -d -p 8080:8080 --name springboot-example-container integrationninjas/springboot-example
+        run: docker run -d -p 8080:8080 --name springboot-example-container sagaarcasm/bms
