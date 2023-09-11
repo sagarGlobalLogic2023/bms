@@ -14,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/theater")
+@CrossOrigin
 public class TheaterController {
     @Autowired
     TheaterService theaterService;
