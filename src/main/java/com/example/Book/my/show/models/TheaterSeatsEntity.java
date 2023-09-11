@@ -1,7 +1,7 @@
 package com.example.Book.my.show.models;
 
 import com.example.Book.my.show.Enums.SeatType;
-import javax.persistence.*;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

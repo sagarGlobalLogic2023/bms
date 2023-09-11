@@ -1,10 +1,8 @@
 package com.example.Book.my.show.ReqDTOs;
 
-import com.example.Book.my.show.models.userEntity;
-
 import lombok.Data;
 
-import javax.persistence.Column;
+import jakarta.persistence.Column;
 
 @Data
 public class userDTO {

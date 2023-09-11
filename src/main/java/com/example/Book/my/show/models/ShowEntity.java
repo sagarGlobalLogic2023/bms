@@ -1,6 +1,6 @@
 package com.example.Book.my.show.models;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
