@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 
-@SpringBootApplication(exclude=SecurityAutoConfiguration.class)
+@SpringBootApplication
 @OpenAPIDefinition
 public class BookMyShowApplication {
 
@@ -17,10 +17,6 @@ public class BookMyShowApplication {
 		SpringApplication.run(BookMyShowApplication.class, args);
 	}
 	
-	@Bean
-	public BCryptPasswordEncoder passwordEncoder() {
-		BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-		return bCryptPasswordEncoder;
-	}
+	
 
 }

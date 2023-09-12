@@ -8,6 +8,7 @@ import com.example.Book.my.show.models.MovieEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,6 +21,7 @@ public class MovieController {
     MovieService movieService;
 
     @PostMapping("/add")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<String> addMovie(@RequestBody() MovieDTO movieDTO){
         String res=movieService.addMovie(movieDTO);
         return new ResponseEntity<>(res, HttpStatus.CREATED);

@@ -8,6 +8,7 @@ import com.example.Book.my.show.ReqDTOs.userDTO;
 import com.example.Book.my.show.models.userEntity;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class UserService {
     
-	@Autowired
+	 @Autowired
 	   private UserReop userRepo;
 	    
 	    @Autowired(required = true)
@@ -28,6 +29,7 @@ public class UserService {
 
 	    userEntity user=UserDto_to_Entity.converterUserDtoToEntity(userDTO);
 	    user.setPassword(beBCryptPasswordEncoder.encode(user.getPassword()));
+	    user.setRole("ROLE_USER");
 	        userRepo.save(user);
 	        return "success";
 	    }
@@ -51,7 +53,14 @@ public class UserService {
 	       }else {
 	           return new LoginResponse("Email not exits", false);
 	       }
-	
-	
-    }
+	   }
+	   
+	   public List<userEntity> getAllUser() {
+			return userRepo.findAll();
+		}
+	   
+	   public userEntity save(userEntity user) {
+			user.setPassword(beBCryptPasswordEncoder.encode(user.getPassword()));
+			return userRepo.save(user);
+		}
 }

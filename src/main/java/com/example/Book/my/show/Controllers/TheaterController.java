@@ -8,6 +8,7 @@ import com.example.Book.my.show.models.TheaterEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,6 +25,7 @@ public class TheaterController {
     private TheaterSeatsRepo theaterSeatsRepo;
 
     @PostMapping("/add")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<String> addTheater(@RequestBody() TheaterDTO theaterDTO){
         String stateMent=theaterService.AddTheater(theaterDTO);
         return new ResponseEntity<>(stateMent, HttpStatus.CREATED);

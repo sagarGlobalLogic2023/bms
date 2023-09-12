@@ -12,4 +12,6 @@ public interface UserReop extends JpaRepository<userEntity,Integer> {
 	
 	userEntity findByEmail(String email);
 	
+	Optional<userEntity> findByName(String name);
+	
 }

@@ -20,7 +20,14 @@ import java.util.List;
 @AllArgsConstructor
 public class userEntity {
 
-	    @Id
+	  public userEntity(String name, String email, String password, String role) {
+			this.name = name;
+			this.email = email;
+			this.password = password;
+			this.role = role;
+		}
+
+		@Id
 	    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	    private int id;
 	    
@@ -32,6 +39,9 @@ public class userEntity {
 	    
 	    @Column(nullable=false, length=255)
 	    private String password;
+	    
+	    @Column(nullable=false, length=255)
+	    private String role;
 	    
 	    @CreationTimestamp
 	    @Temporal(value = TemporalType.TIMESTAMP)
