@@ -9,6 +9,8 @@ import lombok.NoArgsConstructor;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 @Table(name = "Movies")
 @Data
@@ -22,6 +24,8 @@ public class MovieEntity {
     @Column(unique = true,nullable = false)
     private String name;
     private double duration;
+    
+    @JsonFormat(pattern = "dd-MM-yyyy")
     private Date releasedate;
 
     @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL)
