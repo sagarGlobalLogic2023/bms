@@ -25,13 +25,13 @@ public class UserService {
 	    @Autowired(required = true)
 		private BCryptPasswordEncoder beBCryptPasswordEncoder;
 
-	   public String add_user(userDTO userDTO){
+	   public userEntity add_user(userDTO userDTO){
 
 	    userEntity user=UserDto_to_Entity.converterUserDtoToEntity(userDTO);
 	    user.setPassword(beBCryptPasswordEncoder.encode(user.getPassword()));
 	    user.setRole("ROLE_USER");
 	        userRepo.save(user);
-	        return "success";
+	        return user;
 	    }
 	   
 	   public LoginResponse login(LoginDTO loginDTO) {

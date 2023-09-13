@@ -6,6 +6,10 @@ import com.example.Book.my.show.ReqDTOs.LoginResponse;
 import com.example.Book.my.show.ReqDTOs.userDTO;
 import com.example.Book.my.show.Service.JwtService;
 import com.example.Book.my.show.Service.UserService;
+import com.example.Book.my.show.models.userEntity;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,9 +35,9 @@ public class UserController {
 	    
 
 	    @PostMapping("/add-user")
-	    public ResponseEntity<String> AddUser(@RequestBody()userDTO userDTO){
-	        String statement=userService.add_user(userDTO);
-	        return new ResponseEntity<>(statement, HttpStatus.CREATED) ;
+	    public ResponseEntity<userEntity> AddUser(@RequestBody()userDTO userDTO){
+	        userEntity user=userService.add_user(userDTO);
+	        return new ResponseEntity<>(user, HttpStatus.CREATED) ;
 	    }
 	    
 	    
@@ -55,5 +59,12 @@ public class UserController {
 	    	LoginResponse res=userService.login(loginDTO);
 	    	return new ResponseEntity<>(res, HttpStatus.OK);
 	    }	
+	    
+	    @GetMapping("/getAll")
+	    public ResponseEntity<List<userEntity>> getAllUsers()
+	    {
+	    	List<userEntity>users=userService.getAllUser();
+	    	return new ResponseEntity<>(users, HttpStatus.OK);
+	    }
 	
 }

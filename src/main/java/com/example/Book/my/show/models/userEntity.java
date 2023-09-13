@@ -2,13 +2,18 @@ package com.example.Book.my.show.models;
 
 
 import lombok.AllArgsConstructor;
+
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
+
 import java.util.Date;
 import java.util.List;
 
@@ -45,13 +50,16 @@ public class userEntity {
 	    
 	    @CreationTimestamp
 	    @Temporal(value = TemporalType.TIMESTAMP)
+	    @JsonFormat(pattern = "dd-MM-yyyy")
 	    private Date createdOn;
 
 	    @UpdateTimestamp
 	    @Temporal(value = TemporalType.TIMESTAMP)
+	    @JsonFormat(pattern = "dd-MM-yyyy")
 	    private Date updatedOn;
 
 	    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+	    @JsonIgnore
 	    private List<TicketEntity> Tickets;
 
 
