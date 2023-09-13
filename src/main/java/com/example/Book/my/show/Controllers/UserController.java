@@ -1,6 +1,7 @@
 package com.example.Book.my.show.Controllers;
 
 import com.example.Book.my.show.ReqDTOs.AuthRequest;
+import com.example.Book.my.show.ReqDTOs.AuthResponse;
 import com.example.Book.my.show.ReqDTOs.LoginDTO;
 import com.example.Book.my.show.ReqDTOs.LoginResponse;
 import com.example.Book.my.show.ReqDTOs.userDTO;
@@ -42,10 +43,11 @@ public class UserController {
 	    
 	    
 	    @PostMapping("/authenticate")
-	    public String authenticateAndGetToken(@RequestBody AuthRequest authRequest) throws UsernameNotFoundException {
+	    public ResponseEntity<AuthResponse> authenticateAndGetToken(@RequestBody AuthRequest authRequest) throws UsernameNotFoundException {
 	        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
 	        if (authentication.isAuthenticated()) {
-	            return jwtService.generateToken(authRequest.getUsername());
+	        	   AuthResponse response=jwtService.generateToken(authRequest.getUsername());
+	               return new ResponseEntity<>(response, HttpStatus.OK);
 	        } else {
 	            throw new UsernameNotFoundException("invalid user request !");
 	        }

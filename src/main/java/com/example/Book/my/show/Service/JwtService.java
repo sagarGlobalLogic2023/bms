@@ -2,6 +2,10 @@ package com.example.Book.my.show.Service;
 
 import org.springframework.stereotype.Component;
 
+import com.example.Book.my.show.Repository.UserReop;
+import com.example.Book.my.show.ReqDTOs.AuthResponse;
+import com.example.Book.my.show.models.userEntity;
+
 import io.jsonwebtoken.Jwts;
 
 import io.jsonwebtoken.Claims;
@@ -10,12 +14,15 @@ import io.jsonwebtoken.SignatureAlgorithm;
 
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Function;
 
 //==============================================================
@@ -23,6 +30,9 @@ import java.util.function.Function;
 //=================================================================
 @Component
 public class JwtService {
+	
+	@Autowired
+	private UserReop userRepo;
 
 	public static final String SECRET = "5367566B59703373367639792F423F4528482B4D6251655468576D5A71347437";
 
@@ -52,9 +62,11 @@ public class JwtService {
 		return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
 	}
 
-	public String generateToken(String username) {
+	public AuthResponse generateToken(String username) {
 		Map<String, Object> claims = new HashMap<>();
-		return createToken(claims, username);
+		Optional<userEntity> user=userRepo.findByName(username);
+		String token= createToken(claims, username);
+		return new AuthResponse(token, user);
 	}
 
 	private String createToken(Map<String, Object> claims, String username) {
