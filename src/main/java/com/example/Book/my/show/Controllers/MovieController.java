@@ -32,7 +32,7 @@ public class MovieController {
         return new ResponseEntity<>(movie,HttpStatus.OK);
     }
 
-    @GetMapping("Get_All_Movies")
+    @GetMapping("/Get_All_Movies")
     public ResponseEntity<List<MovieResponceDto>> getMovies(){
         List<MovieResponceDto> movies=movieService.getMovies();
         return new ResponseEntity<>(movies,HttpStatus.OK);
