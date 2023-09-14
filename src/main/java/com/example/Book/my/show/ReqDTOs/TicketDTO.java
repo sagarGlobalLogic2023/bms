@@ -7,6 +7,7 @@ import java.util.List;
 @Data
 public class TicketDTO {
     private List<String> allotedSeats;
+    private int amount;
     private int userId;
     private int showId;
 }

@@ -16,15 +16,19 @@ public class TheaterSeatsEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;//primary key
+
     private String seatNo;
     @Enumerated(value = EnumType.STRING)
     private SeatType seatType;
 
     private int rate;
 
+    //COMMENT LATER FOR SEATS IMPLEMENTATION
     @ManyToOne
     @JoinColumn
     private TheaterEntity theaterEntity;
+
+
 
     public TheaterSeatsEntity(String seatNo, SeatType seatType, int rate) {
         this.seatNo = seatNo;

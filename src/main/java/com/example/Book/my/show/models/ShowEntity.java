@@ -2,10 +2,7 @@ package com.example.Book.my.show.models;
 
 import jakarta.persistence.*;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -15,8 +12,9 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "Shows")
-@Data
+@Table(name = "shows")
+@Getter
+@Setter
 @NoArgsConstructor
 @Builder
 @AllArgsConstructor
@@ -27,27 +25,35 @@ public class ShowEntity {
 
     private LocalDate showDate;
     private LocalTime showTime;
+    private int price;
+
     private  double multiplayer;
 
-    @CreationTimestamp
-    private Date createdOn;
-    @UpdateTimestamp
-    private Date updatedOn;
-
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn
     private MovieEntity movie;
 
-
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn
     private TheaterEntity theater;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "seat_id")
+    private SeatsEntity seats;
+
 
 
  @OneToMany(mappedBy = "show",cascade = CascadeType.ALL)
     private List<TicketEntity> listOfTickets;
 
+/*
 
+ //COMMENT LATER FOR SEATS IMPLEMENTATION
  @OneToMany(mappedBy = "show",cascade = CascadeType.ALL)
     private List<ShowSeatEntity> listOfSeats;
+
+*/
+
+
 }
+

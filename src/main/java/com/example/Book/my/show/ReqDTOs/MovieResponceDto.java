@@ -14,8 +14,18 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 @Builder
 public class MovieResponceDto {
     private String name;
+
+    private String image;
+    private String bannerImage;
+
     @JsonFormat(pattern = "dd-MM-yyyy")
     private Date releasedate;
     private double duration;
+    private String category;
+    private String howManyInterested;
+    private String aboutTheMovie;
+    private String cast;
+    private String crew;
+
     private List<String> theaters=new ArrayList<>();
 }

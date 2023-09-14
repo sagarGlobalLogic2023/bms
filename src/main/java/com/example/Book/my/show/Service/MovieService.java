@@ -19,44 +19,91 @@ public class MovieService {
     MovieRepo movieRepo;
 
     public String addMovie(MovieDTO movieDTO){
-        MovieEntity movie= MovieDtoToEntity.converterDTOtoEntity(movieDTO);
+        MovieEntity movie = MovieDtoToEntity.converterDTOtoEntity(movieDTO);
         movieRepo.save(movie);
         return "success";
     }
     public MovieResponceDto getMovie(String mvName){
-        MovieEntity movie=movieRepo.findByName(mvName);
-        MovieResponceDto movieres= MovieResponceDto.builder()
+        MovieEntity movie = movieRepo.findByName(mvName);
+        MovieResponceDto movieRes = MovieResponceDto.builder()
                 .name(movie.getName())
-                .duration(movie.getDuration())
+                .image(movie.getImage())
+                .bannerImage(movie.getBannerImage())
                 .releasedate(movie.getReleasedate())
+                .duration(movie.getDuration())
+                .category(movie.getCategory())
+                .howManyInterested((movie.getHowManyInterested()))
+                .aboutTheMovie(movie.getAboutTheMovie())
+                .crew(movie.getCrew())
+                .cast(movie.getCast())
                 .build();
         List<String> theaters=new ArrayList<>();
-        List<ShowEntity> shows=movie.getListOfShows();
+        List<ShowEntity> shows = movie.getListOfShows();
         for(ShowEntity show:shows){
-            TheaterEntity theater=show.getTheater();
+            TheaterEntity theater = show.getTheater();
             if(!theaters.contains(theater)){
                 theaters.add(theater.getName());
             }
         }
-        movieres.setTheaters(theaters);
+        movieRes.setTheaters(theaters);
 
-        return movieres;
+        return movieRes;
     }
-    public List<MovieResponceDto> getMovies(){
-        List<MovieEntity> movies=movieRepo.findAll();
-        List<MovieResponceDto> Allmovies=new ArrayList<>();
-        for (MovieEntity movie:movies){
-            MovieResponceDto responceDto= MovieResponceDto.builder().name(movie.getName()).releasedate(movie.getReleasedate()).duration(movie.getDuration()).build();
-            List<ShowEntity> showEntities=movie.getListOfShows();
-            List<String> theaters=new ArrayList<>();
-            for (ShowEntity show:showEntities){
+    public List<MovieResponceDto> getAllMovies(){
+        List<MovieEntity> movies = movieRepo.findAll();
+        List<MovieResponceDto> allMovies = new ArrayList<>();
+        for (MovieEntity movie : movies){
+            MovieResponceDto responseDto =  MovieResponceDto.builder()
+                    .name(movie.getName())
+                    .image(movie.getImage())
+                    .bannerImage(movie.getBannerImage())
+                    .releasedate(movie.getReleasedate())
+                    .duration(movie.getDuration())
+                    .category(movie.getCategory())
+                    .howManyInterested((movie.getHowManyInterested()))
+                    .aboutTheMovie(movie.getAboutTheMovie())
+                    .crew(movie.getCrew())
+                    .cast(movie.getCast())
+                    .build();
+            List<ShowEntity> showEntities = movie.getListOfShows();
+            List<String> theaters = new ArrayList<>();
+            for (ShowEntity show : showEntities){
                 if(!theaters.contains(show.getTheater())){
                     theaters.add(show.getTheater().getName());
                 }
-                responceDto.setTheaters(theaters);
+                responseDto.setTheaters(theaters);
             }
-            Allmovies.add(responceDto);
+            allMovies.add(responseDto);
         }
-        return Allmovies;
+        return allMovies;
+    }
+
+    public List<MovieResponceDto> getByCategory(String category){
+        List<MovieEntity> movies = movieRepo.findByCategory(category);
+        List<MovieResponceDto> allMovies = new ArrayList<>();
+        for (MovieEntity movie : movies){
+            MovieResponceDto responseDto =  MovieResponceDto.builder()
+                    .name(movie.getName())
+                    .image(movie.getImage())
+                    .bannerImage(movie.getBannerImage())
+                    .releasedate(movie.getReleasedate())
+                    .duration(movie.getDuration())
+                    .category(movie.getCategory())
+                    .howManyInterested((movie.getHowManyInterested()))
+                    .aboutTheMovie(movie.getAboutTheMovie())
+                    .crew(movie.getCrew())
+                    .cast(movie.getCast())
+                    .build();
+            List<ShowEntity> showEntities = movie.getListOfShows();
+            List<String> theaters = new ArrayList<>();
+            for (ShowEntity show : showEntities){
+                if(!theaters.contains(show.getTheater())){
+                    theaters.add(show.getTheater().getName());
+                }
+                responseDto.setTheaters(theaters);
+            }
+            allMovies.add(responseDto);
+        }
+        return allMovies;
     }
 }

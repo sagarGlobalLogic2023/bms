@@ -17,7 +17,9 @@ public class TicketEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private String alloted_seats;
+    private String allotedSeats;
+
+
 
     private int amount;
 
@@ -31,7 +33,11 @@ public class TicketEntity {
     @JoinColumn
     private ShowEntity show;
 
+/*
+
+    //COMMENT LATER FOR SEATS IMPLEMENTATION
     @OneToMany(mappedBy = "tickets",cascade = CascadeType.ALL)
     private  List<ShowSeatEntity> bookSeats;
+*/
 
 }

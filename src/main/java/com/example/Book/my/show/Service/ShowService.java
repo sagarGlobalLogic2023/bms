@@ -1,14 +1,16 @@
 package com.example.Book.my.show.Service;
 
-import com.example.Book.my.show.Repository.MovieRepo;
-import com.example.Book.my.show.Repository.ShowRepo;
-import com.example.Book.my.show.Repository.ShowSeatsRepo;
-import com.example.Book.my.show.Repository.TheaterRepo;
+import com.example.Book.my.show.Converters.ObjectTranslator;
+import com.example.Book.my.show.Repository.*;
+import com.example.Book.my.show.ReqDTOs.MovieDTO;
+import com.example.Book.my.show.ReqDTOs.SeatResponseDTO;
 import com.example.Book.my.show.ReqDTOs.ShowDTO;
+import com.example.Book.my.show.ReqDTOs.ShowResponseDto;
 import com.example.Book.my.show.models.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,11 +26,29 @@ public class ShowService {
     @Autowired
     ShowSeatsRepo showSeatsRepo;
 
+    @Autowired
+    SeatsRepo seatsRepo;
+
+    @Autowired
+    MovieService movieService;
+
+    @Autowired
+    TheaterService theaterService;
+
+    @Autowired
+    ObjectTranslator translator;
+
+/*
 
     public String addShow(ShowDTO showDTO){
 
+
 //        create show entity
-        ShowEntity showEntity=ShowEntity.builder().showDate(showDTO.getShowDate()).showTime(showDTO.getShowTime()).multiplayer(showDTO.getMultiplayer()).build();
+        ShowEntity showEntity=ShowEntity.builder()
+                .showDate(showDTO.getShowDate())
+                .showTime(showDTO.getShowTime())
+                .multiplayer(showDTO.getMultiplayer())
+                .build();
 //        Need to get the MovieRepo
         String name=showDTO.getMovieName();
         MovieEntity movie=movieRepo.findByName(name);
@@ -62,4 +82,116 @@ public class ShowService {
         showSeatsRepo.saveAll(seats);
         return seats;
     }
+
+*/
+
+    public List<ShowResponseDto> getAllShows(){
+        System.out.println("in service");
+
+        List<ShowEntity> showEntityList = showRepo.findAll();
+
+        List<ShowResponseDto>showResponseDtoList = new ArrayList<>();
+        for (ShowEntity showEntity : showEntityList){
+            ShowResponseDto showResponseDto = ShowResponseDto.builder()
+                    .id(showEntity.getId())
+                    .showDate(showEntity.getShowDate())
+                    .showTime(showEntity.getShowTime())
+                    .price(showEntity.getPrice())
+                    .movie(movieService.getMovie(showEntity.getMovie().getName()))
+                    .theater(theaterService.getTheaterByName(showEntity.getTheater().getName()))
+                    .build();
+
+            showResponseDtoList.add(showResponseDto);
+
+            /*
+             MovieEntity movie = showEntity.getMovie();
+            MovieDTO movieDTO = new MovieDTO(movie.getName(),movie.getImage(), movie.getBannerImage(),movie.getReleasedate(),movie.getDuration(), movie.getCategory(),movie.getHowManyInterested(),movie.getAboutTheMovie(),movie.getCast(),movie.getCrew());
+            showResponseDto.setMovie(movie);
+            TheaterEntity theater =  showEntity.getTheater();
+            showResponseDto.setTheater(theater);
+            */
+        }
+
+
+        return showResponseDtoList;
+    }
+
+    public String addShow(ShowDTO showDTO){
+
+        ShowEntity showEntity = ShowEntity.builder()
+                .showDate(showDTO.getShowDate())
+                .showTime(showDTO.getShowTime())
+                .price(showDTO.getPrice())
+                .multiplayer(showDTO.getMultiplayer())
+                .seats(new SeatsEntity())
+                .build();
+        //Need to get the MovieRepo
+        String name = showDTO.getMovieName();
+        MovieEntity movie = movieRepo.findByName(name);
+
+        //Need to get Theater Repository
+        TheaterEntity theater = theaterRepo.findById( showDTO.getTheaterId() ).get();
+
+        showEntity.setMovie(movie);
+        showEntity.setTheater(theater);
+
+        movie.getListOfShows().add(showEntity);
+        /*
+        theater.getListOfSeats().add(showEntity);
+        */
+        movieRepo.save(movie);
+        theaterRepo.save(theater);
+
+        showRepo.save(showEntity);
+
+        return "Show Successfully added";
+    }
+
+    public SeatResponseDTO getShowSeats(int showId) {
+        ShowEntity showEntity = showRepo.findById(showId).get();
+        SeatsEntity seatsEntity = showEntity.getSeats();
+        SeatResponseDTO seatResponseDTO = translator.translate(seatsEntity, SeatResponseDTO.class);
+        return seatResponseDTO;
+    }
+
+    public List<ShowResponseDto> getByCity(String city) {
+        List<ShowEntity> shows = showRepo.findAll();
+        List<ShowResponseDto> allShows = new ArrayList<>();
+        for (ShowEntity show : shows){
+            if (show.getTheater().getCity().equals(city) ) {
+                ShowResponseDto responseDto = ShowResponseDto.builder()
+                        .id(show.getId())
+                        .showDate(show.getShowDate())
+                        .showTime(show.getShowTime())
+                        .price(show.getPrice())
+                        .movie(movieService.getMovie(show.getMovie().getName()))
+                        .theater(theaterService.getTheaterByName(show.getTheater().getName()))
+                        .build();
+
+                allShows.add(responseDto);
+            }
+        }
+        return allShows;
+    }
+
+    public List<ShowResponseDto> getByDate(LocalDate date) {
+        List<ShowEntity> shows = showRepo.findAll();
+        List<ShowResponseDto> allShows = new ArrayList<>();
+        for (ShowEntity show : shows){
+            if (show.getShowDate().equals(date)) {
+                ShowResponseDto responseDto = ShowResponseDto.builder()
+                        .id(show.getId())
+                        .showDate(show.getShowDate())
+                        .showTime(show.getShowTime())
+                        .price(show.getPrice())
+                        .movie(movieService.getMovie(show.getMovie().getName()))
+                        .theater(theaterService.getTheaterByName(show.getTheater().getName()))
+                        .build();
+
+                allShows.add(responseDto);
+            }
+        }
+        return allShows;
+    }
+
 }

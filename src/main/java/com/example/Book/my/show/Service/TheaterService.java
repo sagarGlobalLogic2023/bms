@@ -32,7 +32,13 @@ public class TheaterService {
 
 
     public String AddTheater(TheaterDTO theaterDTO){
-        TheaterEntity theater= TheaterEntity.builder().name(theaterDTO.getName()).city(theaterDTO.getCity()).address(theaterDTO.getAddress()).build();
+        TheaterEntity theater= TheaterEntity.builder()
+                .name(theaterDTO.getName())
+                .city(theaterDTO.getCity())
+                .address(theaterDTO.getAddress())
+                .build();
+
+        /*
         List<TheaterSeatsEntity> list= theaterSeatsService.setTheaterSeats();
         theater.setTheaterSeatsEntity(list);//Bydirectional mapping
 //        for each theater seat we need to set the theaterEntity
@@ -40,7 +46,12 @@ public class TheaterService {
         for(TheaterSeatsEntity st:list){
             st.setTheaterEntity(theater);
         }
+        */
+
+
         theaterRepo.save(theater);
+
+
         return "THEATER SUCCESSFULLY ADDED";
     }
 
@@ -54,10 +65,10 @@ public class TheaterService {
     }
 
     public List<TheaterDTO> getAllTheares() {
-        List<TheaterDTO> theaters=new ArrayList<>();
-        List<TheaterEntity> theaterEntities=theaterRepo.findAll();
+        List<TheaterDTO> theaters = new ArrayList<>();
+        List<TheaterEntity> theaterEntities = theaterRepo.findAll();
         for(TheaterEntity th: theaterEntities){
-            TheaterDTO theaterDTO=new TheaterDTO();
+            TheaterDTO theaterDTO = new TheaterDTO();
             theaterDTO.setAddress(th.getAddress());
             theaterDTO.setName(th.getName());
             theaterDTO.setCity((th.getCity()));
@@ -68,8 +79,8 @@ public class TheaterService {
     }
 
     public TheaterDTO getTheaterByName(String name){
-        TheaterEntity theater=theaterRepo.findByName(name);
-        TheaterDTO theaterDTO=new TheaterDTO();
+        TheaterEntity theater = theaterRepo.findByName(name);
+        TheaterDTO theaterDTO = new TheaterDTO();
         theaterDTO.setName(theater.getName());
         theaterDTO.setCity(theater.getCity());
         theaterDTO.setAddress(theater.getAddress());
@@ -78,10 +89,10 @@ public class TheaterService {
     public List<TheaterDTO> getTheatersByMovie(String name){
         List<TheaterDTO> theaterDTOList=new ArrayList<>();
 
-        List<ShowEntity> showEntities=showRepo.findAll();
+        List<ShowEntity> showEntities = showRepo.findAll();
 
         for(ShowEntity show: showEntities){
-          MovieEntity movie=show.getMovie();
+          MovieEntity movie = show.getMovie();
           if(movie.getName().equals(name)){
               TheaterEntity theater=show.getTheater();
               TheaterDTO theaterDTO=new TheaterDTO();

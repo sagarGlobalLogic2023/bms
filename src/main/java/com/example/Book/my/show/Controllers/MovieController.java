@@ -19,25 +19,35 @@ import java.util.List;
 public class MovieController {
     @Autowired
     MovieService movieService;
+    /*{
+        "name": "jawan",
+            "releasedate": "2023-09-12T09:39:54.258Z",
+            "duration": 2
 
+    }*/
     @PostMapping("/add")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<String> addMovie(@RequestBody() MovieDTO movieDTO){
-        String res=movieService.addMovie(movieDTO);
+        String res = movieService.addMovie(movieDTO);
         return new ResponseEntity<>(res, HttpStatus.CREATED);
     }
     @GetMapping("/Get_movie")
-    public ResponseEntity<MovieResponceDto> getMovieByName(@RequestParam("MovieName") String MvName){
-        MovieResponceDto movie=movieService.getMovie(MvName);
+    public ResponseEntity<MovieResponceDto> getMovieByName(@RequestParam("MovieName") String movieName){
+        MovieResponceDto movie = movieService.getMovie(movieName);
         return new ResponseEntity<>(movie,HttpStatus.OK);
     }
 
     @GetMapping("/Get_All_Movies")
-    public ResponseEntity<List<MovieResponceDto>> getMovies(){
-        List<MovieResponceDto> movies=movieService.getMovies();
+    public ResponseEntity<List<MovieResponceDto>> getAllMovies(){
+        List<MovieResponceDto> movies = movieService.getAllMovies();
         return new ResponseEntity<>(movies,HttpStatus.OK);
     }
 
+    @GetMapping("/Get_By_Category")
+    public ResponseEntity<List<MovieResponceDto>> getByCategory(@RequestParam("MovieCategory") String category){
+        List<MovieResponceDto> movies = movieService.getByCategory(category);
+        return new ResponseEntity<>(movies,HttpStatus.OK);
+    }
 
 
 
