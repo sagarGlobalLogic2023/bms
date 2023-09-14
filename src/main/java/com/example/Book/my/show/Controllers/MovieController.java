@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -38,7 +39,16 @@ public class MovieController {
         return new ResponseEntity<>(movies,HttpStatus.OK);
     }
 
+    @GetMapping("/Get_By_Category")
+    public ResponseEntity<List<MovieResponceDto>> getByCategory(String category){
+        List<MovieResponceDto> movies = movieService.getByCategory(category);
+        return new ResponseEntity<>(movies,HttpStatus.OK);
+    }
 
-
+    @GetMapping("/Get_By_Date")
+    public ResponseEntity<List<MovieResponceDto>> getByDate(Date date){
+        List<MovieResponceDto> movies = movieService.getByDate(date);
+        return new ResponseEntity<>(movies,HttpStatus.OK);
+    }
 
 }

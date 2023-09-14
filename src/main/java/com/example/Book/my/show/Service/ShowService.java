@@ -2,6 +2,7 @@ package com.example.Book.my.show.Service;
 
 import com.example.Book.my.show.Converters.ObjectTranslator;
 import com.example.Book.my.show.Repository.*;
+import com.example.Book.my.show.ReqDTOs.MovieResponceDto;
 import com.example.Book.my.show.ReqDTOs.SeatResponseDTO;
 import com.example.Book.my.show.ReqDTOs.ShowDTO;
 import com.example.Book.my.show.ReqDTOs.ShowResponseDto;
@@ -72,6 +73,25 @@ public class ShowService {
         }
         showSeatsRepo.saveAll(seats);
         return seats;
+    }
+
+    public List<ShowResponseDto> getByCity(String city) {
+        List<ShowEntity> shows = showRepo.findAll();
+        List<ShowResponseDto> allShows = new ArrayList<>();
+        for (ShowEntity show : shows){
+            if (show.getTheater().getCity() == city) {
+                ShowResponseDto responseDto = ShowResponseDto.builder()
+                        .id(show.getId())
+                        .showDate(show.getShowDate())
+                        .showTime(show.getShowTime())
+                        .movie(show.getMovie())
+                        .theater(show.getTheater())
+                        .build();
+
+                allShows.add(responseDto);
+            }
+        }
+        return allShows;
     }
 
 

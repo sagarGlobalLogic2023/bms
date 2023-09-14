@@ -10,7 +10,9 @@ import com.example.Book.my.show.models.TheaterEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.xml.crypto.Data;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -51,6 +53,64 @@ public class MovieService {
     }
     public List<MovieResponceDto> getAllMovies(){
         List<MovieEntity> movies = movieRepo.findAll();
+        List<MovieResponceDto> allMovies = new ArrayList<>();
+        for (MovieEntity movie : movies){
+            MovieResponceDto responseDto =  MovieResponceDto.builder()
+                    .name(movie.getName())
+                    .image(movie.getImage())
+                    .bannerImage(movie.getBannerImage())
+                    .releasedate(movie.getReleasedate())
+                    .duration(movie.getDuration())
+                    .category(movie.getCategory())
+                    .howManyInterested((movie.getHowManyInterested()))
+                    .aboutTheMovie(movie.getAboutTheMovie())
+                    .crew(movie.getCrew())
+                    .cast(movie.getCast())
+                    .build();
+            List<ShowEntity> showEntities = movie.getListOfShows();
+            List<String> theaters = new ArrayList<>();
+            for (ShowEntity show : showEntities){
+                if(!theaters.contains(show.getTheater())){
+                    theaters.add(show.getTheater().getName());
+                }
+                responseDto.setTheaters(theaters);
+            }
+            allMovies.add(responseDto);
+        }
+        return allMovies;
+    }
+
+    public List<MovieResponceDto> getByCategory(String category){
+        List<MovieEntity> movies = movieRepo.findByCategory(category);
+        List<MovieResponceDto> allMovies = new ArrayList<>();
+        for (MovieEntity movie : movies){
+            MovieResponceDto responseDto =  MovieResponceDto.builder()
+                    .name(movie.getName())
+                    .image(movie.getImage())
+                    .bannerImage(movie.getBannerImage())
+                    .releasedate(movie.getReleasedate())
+                    .duration(movie.getDuration())
+                    .category(movie.getCategory())
+                    .howManyInterested((movie.getHowManyInterested()))
+                    .aboutTheMovie(movie.getAboutTheMovie())
+                    .crew(movie.getCrew())
+                    .cast(movie.getCast())
+                    .build();
+            List<ShowEntity> showEntities = movie.getListOfShows();
+            List<String> theaters = new ArrayList<>();
+            for (ShowEntity show : showEntities){
+                if(!theaters.contains(show.getTheater())){
+                    theaters.add(show.getTheater().getName());
+                }
+                responseDto.setTheaters(theaters);
+            }
+            allMovies.add(responseDto);
+        }
+        return allMovies;
+    }
+
+    public List<MovieResponceDto> getByDate(Date date){
+        List<MovieEntity> movies = movieRepo.findByReleasedate(date);
         List<MovieResponceDto> allMovies = new ArrayList<>();
         for (MovieEntity movie : movies){
             MovieResponceDto responseDto =  MovieResponceDto.builder()

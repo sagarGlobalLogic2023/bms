@@ -1,5 +1,6 @@
 package com.example.Book.my.show.Controllers;
 
+import com.example.Book.my.show.ReqDTOs.MovieResponceDto;
 import com.example.Book.my.show.ReqDTOs.SeatResponseDTO;
 import com.example.Book.my.show.ReqDTOs.ShowDTO;
 import com.example.Book.my.show.ReqDTOs.ShowResponseDto;
@@ -12,6 +13,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -23,9 +25,15 @@ public class ShowController {
 
     @PostMapping("/add")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public ResponseEntity<String> addShow(@RequestBody()ShowDTO showDTO){
-    String req= showService.addShow(showDTO);
-    return new ResponseEntity<>(req, HttpStatus.ACCEPTED);
+    public ResponseEntity<String> addShow(@RequestBody() ShowDTO showDTO) {
+        String req = showService.addShow(showDTO);
+        return new ResponseEntity<>(req, HttpStatus.ACCEPTED);
+    }
+
+    @GetMapping("/Get_By_City")
+    public ResponseEntity<List<ShowResponseDto>> getByCity(String city){
+        List<ShowResponseDto> shows = showService.getByCity(city);
+        return new ResponseEntity<>(shows, HttpStatus.OK);
     }
 
 
@@ -44,6 +52,7 @@ public class ShowController {
         return new ResponseEntity<>(seatResponseDTO,HttpStatus.OK);
     }
 */
+
 
 
 }
