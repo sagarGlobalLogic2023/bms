@@ -36,11 +36,11 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 @EnableWebMvc
 public class SecurityConfig {
 
-	    @Autowired
-	    private JwtFilter authFilter;
+    @Autowired
+    private JwtFilter authFilter;
 
-	
-	
+
+
     @Bean
     //authentication
     public UserDetailsService userDetailsService() {
@@ -51,11 +51,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.csrf().disable()
                 .authorizeHttpRequests()
-
                 .requestMatchers("/User/**", "/Movie/Get_movie", "/Movie/Get_All_Movies", "/theater/get_Theater_by-Id", "/theater/Get_All_Theaters", "/theater/get_theater_by_name", "/theater/get_TheatersByMovie","/show/allShows", "/show/seats", "/Movie/Get_By_Category", "/show/Get_By_City", "/show/Get_By_Date")
-
-            
-
                 .permitAll()
                 .and()
                 .authorizeHttpRequests().requestMatchers("/Movie/add").hasRole("ADMIN")
@@ -76,10 +72,10 @@ public class SecurityConfig {
     }
 
     @Bean
-	public BCryptPasswordEncoder passwordEncoder() {
-		BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-		return bCryptPasswordEncoder;
-	}
+    public BCryptPasswordEncoder passwordEncoder() {
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        return bCryptPasswordEncoder;
+    }
 
     @Bean
     public AuthenticationProvider authenticationProvider(){
@@ -88,13 +84,13 @@ public class SecurityConfig {
         authenticationProvider.setPasswordEncoder(passwordEncoder());
         return authenticationProvider;
     }
-    
-    
+
+
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
     }
-    
+
     private static final Long MAX_AGE = 3600L;
     private static final int CORS_FILTER_ORDER = -102;
 
