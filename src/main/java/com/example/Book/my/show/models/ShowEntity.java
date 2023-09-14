@@ -53,11 +53,13 @@ public class ShowEntity {
  @OneToMany(mappedBy = "show",cascade = CascadeType.ALL)
     private List<TicketEntity> listOfTickets;
 
+/*
 
  //COMMENT LATER FOR SEATS IMPLEMENTATION
  @OneToMany(mappedBy = "show",cascade = CascadeType.ALL)
     private List<ShowSeatEntity> listOfSeats;
 
+*/
 
 
 }

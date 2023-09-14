@@ -9,6 +9,7 @@ import java.time.LocalTime;
 public class ShowDTO {
     private LocalDate showDate;
     private LocalTime showTime;
+    private int price;
     private  double multiplayer;
     private String movieName;
     private int theaterId;

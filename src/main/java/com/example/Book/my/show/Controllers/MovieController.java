@@ -19,7 +19,12 @@ import java.util.List;
 public class MovieController {
     @Autowired
     MovieService movieService;
+    /*{
+        "name": "jawan",
+            "releasedate": "2023-09-12T09:39:54.258Z",
+            "duration": 2
 
+    }*/
     @PostMapping("/add")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<String> addMovie(@RequestBody() MovieDTO movieDTO){
@@ -38,6 +43,11 @@ public class MovieController {
         return new ResponseEntity<>(movies,HttpStatus.OK);
     }
 
+    @GetMapping("/Get_By_Category")
+    public ResponseEntity<List<MovieResponceDto>> getByCategory(@RequestParam("MovieCategory") String category){
+        List<MovieResponceDto> movies = movieService.getByCategory(category);
+        return new ResponseEntity<>(movies,HttpStatus.OK);
+    }
 
 
 

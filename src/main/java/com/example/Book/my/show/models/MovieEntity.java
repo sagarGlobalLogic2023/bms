@@ -1,10 +1,7 @@
 package com.example.Book.my.show.models;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Date;
 import java.util.List;
@@ -15,6 +12,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+
 public class MovieEntity {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
@@ -28,8 +26,8 @@ public class MovieEntity {
     private String category;
     private String howManyInterested;
     private String aboutTheMovie;
-    private List<String> cast;
-    private List<String>  crew;
+    private String cast;
+    private String  crew;
 
     @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL)
     private List<ShowEntity> listOfShows;

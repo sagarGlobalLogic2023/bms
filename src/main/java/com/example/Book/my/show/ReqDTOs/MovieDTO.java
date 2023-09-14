@@ -1,6 +1,8 @@
 package com.example.Book.my.show.ReqDTOs;
 
 
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import lombok.Data;
 
 
@@ -12,11 +14,12 @@ public class MovieDTO {
     private String name;
     private String image;
     private String bannerImage;
+    @Temporal(TemporalType.DATE)
     private Date releasedate;
     private double duration;
     private String category;
     private String howManyInterested;
     private String aboutTheMovie;
-    private List<String> cast;
-    private List<String> crew;
+    private String cast;
+    private String crew;
 }

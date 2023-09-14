@@ -20,8 +20,8 @@ public class MovieResponceDto {
     private String category;
     private String howManyInterested;
     private String aboutTheMovie;
-    private List<String> cast;
-    private List<String> crew;
+    private String cast;
+    private String crew;
 
     private List<String> theaters=new ArrayList<>();
 }

@@ -26,10 +26,13 @@ public class TicketController {
         return new ResponseEntity<>("Successfully tickets Booked" , HttpStatus.OK);
 
     }
+    /*
     @DeleteMapping("cancel_ticket")
     @PreAuthorize("hasAuthority('ROLE_USER')")
     public ResponseEntity<Integer> cancelTicket(@RequestParam("Id") int ticketId){
         int refund=ticketService.cancelTicket(ticketId);
         return new ResponseEntity<>(refund,HttpStatus.OK);
     }
+
+     */
 }

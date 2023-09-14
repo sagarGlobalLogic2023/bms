@@ -1,10 +1,7 @@
 package com.example.Book.my.show.models;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
@@ -14,6 +11,7 @@ import java.util.List;
 @AllArgsConstructor
 @Data
 @NoArgsConstructor
+
 public class TheaterEntity {
 
     @Id
@@ -27,10 +25,12 @@ public class TheaterEntity {
     @OneToMany(mappedBy = "theater",cascade = CascadeType.ALL)
     private List<ShowEntity> listOfSeats;
 
+
+  /*
     //COMMENT LATER FOR SEATS IMPLEMENTATION
     //      list of Theater seats
     @OneToMany(mappedBy = "theaterEntity",cascade = CascadeType.ALL)
     private List<TheaterSeatsEntity> theaterSeatsEntity;
 
-
+*/
 }

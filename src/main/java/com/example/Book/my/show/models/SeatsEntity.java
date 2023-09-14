@@ -6,6 +6,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.lang.reflect.Field;
+import java.util.HashMap;
+
 @Entity
 @Table(name = "seats")
 @Data
@@ -98,6 +101,48 @@ public class SeatsEntity {
     private boolean seat79 = false;
     private boolean seat80 = false;
 
+
+    public void setAllSeat(HashMap<String, Boolean> seatMap) {
+        // Get all the fields of this class using reflection
+        Field[] fields = SeatsEntity.class.getDeclaredFields();
+
+        // Iterate through the fields and set their values from the HashMap
+        for (Field field : fields) {
+            if (field.getType() == boolean.class) {
+                String fieldName = field.getName();
+                if (seatMap.containsKey(fieldName)) {
+                    try {
+                        boolean value = seatMap.get(fieldName);
+                        field.set(this, value); // Set the field value
+                    } catch (IllegalAccessException e) {
+                        // Handle the exception if necessary
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+    }
+    public HashMap<String, Boolean> getAllSeats(SeatsEntity seatsEntity){
+        HashMap<String, Boolean> seatMap = new HashMap<>();
+
+        // Get all the fields of this class using reflection
+        Field[] fields = SeatsEntity.class.getDeclaredFields();
+
+        // Iterate through the fields and put them into the HashMap
+        for (Field field : fields) {
+            if (field.getType() == boolean.class) {
+                try {
+                    boolean value = field.getBoolean(this); // Get the field value
+                    seatMap.put(field.getName(), value);
+                } catch (IllegalAccessException e) {
+                    // Handle the exception if necessary
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return seatMap;
+    }
 
 
 }
