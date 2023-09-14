@@ -33,9 +33,9 @@ public class ShowController {
 
     @GetMapping("/allShows")
     public ResponseEntity<List<ShowResponseDto>> getAllShows(){
-        System.out.println("inside api");
+
         List<ShowResponseDto> showResponseDtoList = showService.getAllShows();
-        System.out.println("before return in api");
+
         return new ResponseEntity<>(showResponseDtoList,HttpStatus.OK);
     }
     @GetMapping("/seats")
@@ -46,13 +46,13 @@ public class ShowController {
     }
 
     @GetMapping("/Get_By_City")
-    public ResponseEntity<List<ShowResponseDto>> getByCity(String city){
+    public ResponseEntity<List<ShowResponseDto>> getByCity(@RequestParam("city")String city){
         List<ShowResponseDto> shows = showService.getByCity(city);
         return new ResponseEntity<>(shows, HttpStatus.OK);
     }
 
     @GetMapping("/Get_By_Date")
-    public ResponseEntity<List<ShowResponseDto>> getByDate(@RequestParam("ShowDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date){
+    public ResponseEntity<List<ShowResponseDto>> getByDate(@RequestParam("ShowDate") LocalDate date){
         List<ShowResponseDto> shows = showService.getByDate(date);
         return new ResponseEntity<>(shows, HttpStatus.OK);
     }

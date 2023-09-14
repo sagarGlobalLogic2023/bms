@@ -22,8 +22,10 @@ public class TheaterEntity {
     private String address;
     private String city;
 
+
     @OneToMany(mappedBy = "theater",cascade = CascadeType.ALL)
     private List<ShowEntity> listOfSeats;
+
 
 
   /*

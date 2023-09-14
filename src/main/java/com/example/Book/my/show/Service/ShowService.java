@@ -2,6 +2,7 @@ package com.example.Book.my.show.Service;
 
 import com.example.Book.my.show.Converters.ObjectTranslator;
 import com.example.Book.my.show.Repository.*;
+import com.example.Book.my.show.ReqDTOs.MovieDTO;
 import com.example.Book.my.show.ReqDTOs.SeatResponseDTO;
 import com.example.Book.my.show.ReqDTOs.ShowDTO;
 import com.example.Book.my.show.ReqDTOs.ShowResponseDto;
@@ -27,6 +28,12 @@ public class ShowService {
 
     @Autowired
     SeatsRepo seatsRepo;
+
+    @Autowired
+    MovieService movieService;
+
+    @Autowired
+    TheaterService theaterService;
 
     @Autowired
     ObjectTranslator translator;
@@ -83,21 +90,28 @@ public class ShowService {
 
         List<ShowEntity> showEntityList = showRepo.findAll();
 
-        System.out.println("-----------------------------------------"+showEntityList);
         List<ShowResponseDto>showResponseDtoList = new ArrayList<>();
         for (ShowEntity showEntity : showEntityList){
             ShowResponseDto showResponseDto = ShowResponseDto.builder()
                     .id(showEntity.getId())
                     .showDate(showEntity.getShowDate())
                     .showTime(showEntity.getShowTime())
-                    .movie(showEntity.getMovie())
-                    .theater(showEntity.getTheater())
+                    .movie(movieService.getMovie(showEntity.getMovie().getName()))
+                    .theater(theaterService.getTheaterByName(showEntity.getTheater().getName()))
                     .build();
 
             showResponseDtoList.add(showResponseDto);
 
+            /*
+             MovieEntity movie = showEntity.getMovie();
+            MovieDTO movieDTO = new MovieDTO(movie.getName(),movie.getImage(), movie.getBannerImage(),movie.getReleasedate(),movie.getDuration(), movie.getCategory(),movie.getHowManyInterested(),movie.getAboutTheMovie(),movie.getCast(),movie.getCrew());
+            showResponseDto.setMovie(movie);
+            TheaterEntity theater =  showEntity.getTheater();
+            showResponseDto.setTheater(theater);
+            */
         }
-        System.out.println("-----------------------------------------"+showResponseDtoList);
+
+
         return showResponseDtoList;
     }
 
@@ -121,7 +135,9 @@ public class ShowService {
         showEntity.setTheater(theater);
 
         movie.getListOfShows().add(showEntity);
+        /*
         theater.getListOfSeats().add(showEntity);
+        */
         movieRepo.save(movie);
         theaterRepo.save(theater);
 
@@ -141,13 +157,13 @@ public class ShowService {
         List<ShowEntity> shows = showRepo.findAll();
         List<ShowResponseDto> allShows = new ArrayList<>();
         for (ShowEntity show : shows){
-            if (show.getTheater().getCity() == city) {
+            if (show.getTheater().getCity().equals(city) ) {
                 ShowResponseDto responseDto = ShowResponseDto.builder()
                         .id(show.getId())
                         .showDate(show.getShowDate())
                         .showTime(show.getShowTime())
-                        .movie(show.getMovie())
-                        .theater(show.getTheater())
+                        .movie(movieService.getMovie(show.getMovie().getName()))
+                        .theater(theaterService.getTheaterByName(show.getTheater().getName()))
                         .build();
 
                 allShows.add(responseDto);
@@ -165,8 +181,8 @@ public class ShowService {
                         .id(show.getId())
                         .showDate(show.getShowDate())
                         .showTime(show.getShowTime())
-                        .movie(show.getMovie())
-                        .theater(show.getTheater())
+                        .movie(movieService.getMovie(show.getMovie().getName()))
+                        .theater(theaterService.getTheaterByName(show.getTheater().getName()))
                         .build();
 
                 allShows.add(responseDto);
