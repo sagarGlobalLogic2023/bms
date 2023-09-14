@@ -1,12 +1,18 @@
 package com.example.Book.my.show.Controllers;
 
+import com.example.Book.my.show.ReqDTOs.SeatResponseDTO;
 import com.example.Book.my.show.ReqDTOs.ShowDTO;
+import com.example.Book.my.show.ReqDTOs.ShowResponseDto;
 import com.example.Book.my.show.Service.ShowService;
+import com.example.Book.my.show.models.SeatsEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/show")
@@ -21,4 +27,23 @@ public class ShowController {
     String req= showService.addShow(showDTO);
     return new ResponseEntity<>(req, HttpStatus.ACCEPTED);
     }
+
+
+    /*
+
+    @GetMapping("/shows")
+    public ResponseEntity<List<ShowResponseDto>> getAllShows(){
+        List<ShowResponseDto> showResponseDtoList = showService.getAllShows();
+
+        return new ResponseEntity<>(showResponseDtoList,HttpStatus.OK);
+    }
+    @GetMapping("/seats")
+    public ResponseEntity<SeatResponseDTO> getSeats(@RequestParam("showId") int showId){
+        SeatResponseDTO seatResponseDTO = showService.getSeats(showId);
+
+        return new ResponseEntity<>(seatResponseDTO,HttpStatus.OK);
+    }
+*/
+
+
 }

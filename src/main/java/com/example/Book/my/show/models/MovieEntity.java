@@ -21,8 +21,15 @@ public class MovieEntity {
     private int id;
     @Column(unique = true,nullable = false)
     private String name;
-    private double duration;
+    private String image;
+    private String bannerImage;
     private Date releasedate;
+    private double duration;
+    private String category;
+    private String howManyInterested;
+    private String aboutTheMovie;
+    private List<String> cast;
+    private List<String>  crew;
 
     @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL)
     private List<ShowEntity> listOfShows;

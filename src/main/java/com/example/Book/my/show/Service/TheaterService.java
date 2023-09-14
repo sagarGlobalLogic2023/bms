@@ -81,7 +81,7 @@ public class TheaterService {
         List<ShowEntity> showEntities=showRepo.findAll();
 
         for(ShowEntity show: showEntities){
-          MovieEntity movie=show.getMovie();
+          MovieEntity movie = show.getMovie();
           if(movie.getName().equals(name)){
               TheaterEntity theater=show.getTheater();
               TheaterDTO theaterDTO=new TheaterDTO();

@@ -27,6 +27,8 @@ public class ShowEntity {
 
     private LocalDate showDate;
     private LocalTime showTime;
+    private int price;
+
     private  double multiplayer;
 
     @CreationTimestamp
@@ -38,16 +40,25 @@ public class ShowEntity {
     @JoinColumn
     private MovieEntity movie;
 
-
     @ManyToOne
     @JoinColumn
     private TheaterEntity theater;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "seat_id")
+    private SeatsEntity seats;
+
 
 
  @OneToMany(mappedBy = "show",cascade = CascadeType.ALL)
     private List<TicketEntity> listOfTickets;
 
 
+ //COMMENT LATER FOR SEATS IMPLEMENTATION
  @OneToMany(mappedBy = "show",cascade = CascadeType.ALL)
     private List<ShowSeatEntity> listOfSeats;
+
+
+
 }
+

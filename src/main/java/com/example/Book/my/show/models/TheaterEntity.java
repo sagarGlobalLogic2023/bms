@@ -23,11 +23,14 @@ public class TheaterEntity {
     private String name;
     private String address;
     private String city;
-//      list of Theater seats
+
+    @OneToMany(mappedBy = "theater",cascade = CascadeType.ALL)
+    private List<ShowEntity> listOfSeats;
+
+    //COMMENT LATER FOR SEATS IMPLEMENTATION
+    //      list of Theater seats
     @OneToMany(mappedBy = "theaterEntity",cascade = CascadeType.ALL)
     private List<TheaterSeatsEntity> theaterSeatsEntity;
 
 
-    @OneToMany(mappedBy = "theater",cascade = CascadeType.ALL)
-    private List<ShowEntity> listOfSeats;
 }
