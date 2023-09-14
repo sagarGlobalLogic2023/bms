@@ -29,7 +29,7 @@ public class MovieEntity {
     
     @JsonFormat(pattern = "dd-MM-yyyy")
     private Date releasedate;
-    private double duration;
+
     private String category;
     private String howManyInterested;
     private String aboutTheMovie;
