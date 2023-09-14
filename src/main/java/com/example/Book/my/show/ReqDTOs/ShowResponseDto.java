@@ -17,6 +17,7 @@ public class ShowResponseDto {
     private int id;
     private LocalDate showDate;
     private LocalTime showTime;
+    private int price;
     private MovieResponceDto movie;
     private TheaterDTO theater;
 

@@ -96,6 +96,7 @@ public class ShowService {
                     .id(showEntity.getId())
                     .showDate(showEntity.getShowDate())
                     .showTime(showEntity.getShowTime())
+                    .price(showEntity.getPrice())
                     .movie(movieService.getMovie(showEntity.getMovie().getName()))
                     .theater(theaterService.getTheaterByName(showEntity.getTheater().getName()))
                     .build();
@@ -162,6 +163,7 @@ public class ShowService {
                         .id(show.getId())
                         .showDate(show.getShowDate())
                         .showTime(show.getShowTime())
+                        .price(show.getPrice())
                         .movie(movieService.getMovie(show.getMovie().getName()))
                         .theater(theaterService.getTheaterByName(show.getTheater().getName()))
                         .build();
@@ -181,6 +183,7 @@ public class ShowService {
                         .id(show.getId())
                         .showDate(show.getShowDate())
                         .showTime(show.getShowTime())
+                        .price(show.getPrice())
                         .movie(movieService.getMovie(show.getMovie().getName()))
                         .theater(theaterService.getTheaterByName(show.getTheater().getName()))
                         .build();
