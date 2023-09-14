@@ -6,6 +6,8 @@ import lombok.*;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 @Table(name = "Movies")
 @Data
@@ -19,8 +21,13 @@ public class MovieEntity {
     private int id;
     @Column(unique = true,nullable = false)
     private String name;
+
     private String image;
     private String bannerImage;
+
+    private double duration;
+    
+    @JsonFormat(pattern = "dd-MM-yyyy")
     private Date releasedate;
     private double duration;
     private String category;
