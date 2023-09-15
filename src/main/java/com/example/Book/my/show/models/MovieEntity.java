@@ -31,9 +31,13 @@ public class MovieEntity {
     private Date releasedate;
 
     private String category;
+
     private String howManyInterested;
+    @Column(columnDefinition = "TEXT")
     private String aboutTheMovie;
+    @Column(columnDefinition = "TEXT")
     private String cast;
+    @Column(columnDefinition = "TEXT")
     private String  crew;
 
     @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL)
