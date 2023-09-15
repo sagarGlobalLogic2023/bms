@@ -21,8 +21,9 @@ public class MovieEntity {
     private int id;
     @Column(unique = true,nullable = false)
     private String name;
-
+    @Column(columnDefinition = "TEXT")
     private String image;
+    @Column(columnDefinition = "TEXT")
     private String bannerImage;
 
     private double duration;
