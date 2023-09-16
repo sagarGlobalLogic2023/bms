@@ -62,6 +62,8 @@ public class SecurityConfig {
                 .and()
                 .authorizeHttpRequests().requestMatchers("/tickets/book_ticket").hasRole("USER")
                 .and()
+                .authorizeHttpRequests().requestMatchers("/tickets/view_ticket").hasRole("USER")
+                .and()
                 .authorizeHttpRequests().requestMatchers("/tickets/cancel_ticket").hasRole("USER")
                 .and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)

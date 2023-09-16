@@ -1,15 +1,13 @@
 package com.example.Book.my.show.Service;
 
 import com.example.Book.my.show.Repository.*;
+import com.example.Book.my.show.ReqDTOs.MovieResponceDto;
 import com.example.Book.my.show.ReqDTOs.TicketDTO;
 import com.example.Book.my.show.models.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class TicketService {
@@ -29,17 +27,15 @@ public class TicketService {
     private ShowSeatsRepo showSeatsRepo;
 
 
-    public void  BookTickets(TicketDTO ticketDTO) throws Exception {
+    public void BookTickets(TicketDTO ticketDTO) throws Exception {
         // Requirements------>>>
-        userEntity user=userReop.findById(ticketDTO.getUserId()).get();
-        ShowEntity show=showRepo.findById(ticketDTO.getShowId()).get();
+        userEntity user = userReop.findById(ticketDTO.getUserId()).get();
+        ShowEntity show = showRepo.findById(ticketDTO.getShowId()).get();
         List<String> RequestSeats = ticketDTO.getAllotedSeats();
-        System.out.println(RequestSeats);
         SeatsEntity seatsEntity = show.getSeats();
+        HashMap<String, Boolean> allSeats = seatsEntity.getAllSeats(seatsEntity);
 
-        HashMap<String,Boolean> allSeats = seatsEntity.getAllSeats(seatsEntity);
-
-        for(String seat : RequestSeats){
+        for (String seat : RequestSeats) {
 
             allSeats.put(seat, true);
 
@@ -48,7 +44,7 @@ public class TicketService {
         seatsEntity.setAllSeat(allSeats);
         seatsRepo.save(seatsEntity);
 
-        TicketEntity ticket=new TicketEntity();
+        TicketEntity ticket = new TicketEntity();
 
         ticket.setBooked_at(new Date());
         ticket.setShow(show);
@@ -57,7 +53,7 @@ public class TicketService {
         ticket.setAmount(ticketDTO.getAmount());
 
         String allotedSeats = "";
-        for (String s : RequestSeats){
+        for (String s : RequestSeats) {
             allotedSeats = allotedSeats.concat(s);
             allotedSeats = allotedSeats.concat(",");
         }
@@ -90,8 +86,23 @@ public class TicketService {
 //       Success situation
 
 
+    }
 
-
+    public TicketDTO getTicket(int id) {
+        List<TicketEntity> tickets = ticketRepository.findAll();
+        for (TicketEntity ticket : tickets) {
+            if (ticket.getUser().getId() == id) {
+                List<String> allottedSeats = Arrays.asList(ticket.getAllotedSeats().split(",", 0));
+                TicketDTO ticketDTO = TicketDTO.builder()
+                        .allotedSeats(allottedSeats)
+                        .amount(ticket.getAmount())
+                        .userId(ticket.getUser().getId())
+                        .showId(ticket.getShow().getId())
+                        .build();
+                return ticketDTO;
+            }
+        }
+        return null;
     }
 
     /*

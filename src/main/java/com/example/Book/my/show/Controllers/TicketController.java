@@ -9,13 +9,13 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("tickets")
+@RequestMapping("/tickets")
 @CrossOrigin
 public class TicketController {
     @Autowired
     TicketService ticketService;
 
-    @PostMapping("book_ticket")
+    @PostMapping("/book_ticket")
     @PreAuthorize("hasAuthority('ROLE_USER')")
     public ResponseEntity<String> bookTicket(@RequestBody()TicketDTO ticketDTO) throws Exception {
         try{
@@ -27,14 +27,10 @@ public class TicketController {
 
     }
 
-
-    /*
-    @DeleteMapping("cancel_ticket")
+    @GetMapping("/view_ticket")
     @PreAuthorize("hasAuthority('ROLE_USER')")
-    public ResponseEntity<Integer> cancelTicket(@RequestParam("Id") int ticketId){
-        int refund=ticketService.cancelTicket(ticketId);
-        return new ResponseEntity<>(refund,HttpStatus.OK);
+    public ResponseEntity<TicketDTO> viewTicket(@RequestParam("id") int id){
+        TicketDTO ticketDTO = ticketService.getTicket(id);
+        return new ResponseEntity<>(ticketDTO, HttpStatus.OK);
     }
-
-     */
 }

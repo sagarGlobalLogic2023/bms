@@ -174,11 +174,11 @@ public class ShowService {
         return allShows;
     }
 
-    public List<ShowResponseDto> getByDate(LocalDate date) {
+    public List<ShowResponseDto> getByDateAndCity(LocalDate date, String city) {
         List<ShowEntity> shows = showRepo.findAll();
         List<ShowResponseDto> allShows = new ArrayList<>();
         for (ShowEntity show : shows){
-            if (show.getShowDate().equals(date)) {
+            if (show.getShowDate().equals(date) && show.getTheater().getCity().equals(city)) {
                 ShowResponseDto responseDto = ShowResponseDto.builder()
                         .id(show.getId())
                         .showDate(show.getShowDate())

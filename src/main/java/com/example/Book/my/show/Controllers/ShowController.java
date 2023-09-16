@@ -52,8 +52,8 @@ public class ShowController {
     }
 
     @GetMapping("/Get_By_Date")
-    public ResponseEntity<List<ShowResponseDto>> getByDate(@RequestParam("ShowDate") LocalDate date){
-        List<ShowResponseDto> shows = showService.getByDate(date);
+    public ResponseEntity<List<ShowResponseDto>> getByDate(@RequestParam("ShowDate") LocalDate date, @RequestParam("city") String city){
+        List<ShowResponseDto> shows = showService.getByDateAndCity(date, city);
         return new ResponseEntity<>(shows, HttpStatus.OK);
     }
 
