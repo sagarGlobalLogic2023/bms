@@ -154,11 +154,11 @@ public class ShowService {
         return seatResponseDTO;
     }
 
-    public List<ShowResponseDto> getByCity(String city) {
+    public List<ShowResponseDto> getByCity(String city, String name) {
         List<ShowEntity> shows = showRepo.findAll();
         List<ShowResponseDto> allShows = new ArrayList<>();
         for (ShowEntity show : shows){
-            if (show.getTheater().getCity().equals(city) ) {
+            if (show.getTheater().getCity().equals(city) && show.getMovie().getName().equals(name)) {
                 ShowResponseDto responseDto = ShowResponseDto.builder()
                         .id(show.getId())
                         .showDate(show.getShowDate())
@@ -174,11 +174,11 @@ public class ShowService {
         return allShows;
     }
 
-    public List<ShowResponseDto> getByDateAndCity(LocalDate date, String city) {
+    public List<ShowResponseDto> getByDateAndCity(LocalDate date, String city, String name) {
         List<ShowEntity> shows = showRepo.findAll();
         List<ShowResponseDto> allShows = new ArrayList<>();
         for (ShowEntity show : shows){
-            if (show.getShowDate().equals(date) && show.getTheater().getCity().equals(city)) {
+            if (show.getShowDate().equals(date) && show.getTheater().getCity().equals(city) && show.getMovie().getName().equals(name)) {
                 ShowResponseDto responseDto = ShowResponseDto.builder()
                         .id(show.getId())
                         .showDate(show.getShowDate())
@@ -187,11 +187,9 @@ public class ShowService {
                         .movie(movieService.getMovie(show.getMovie().getName()))
                         .theater(theaterService.getTheaterByName(show.getTheater().getName()))
                         .build();
-
                 allShows.add(responseDto);
             }
         }
         return allShows;
     }
-
 }

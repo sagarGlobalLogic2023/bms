@@ -33,11 +33,10 @@ public class ShowController {
 
     @GetMapping("/allShows")
     public ResponseEntity<List<ShowResponseDto>> getAllShows(){
-
         List<ShowResponseDto> showResponseDtoList = showService.getAllShows();
-
         return new ResponseEntity<>(showResponseDtoList,HttpStatus.OK);
     }
+
     @GetMapping("/seats")
     public ResponseEntity<SeatResponseDTO> getShowSeats(@RequestParam("showId") int showId){
         SeatResponseDTO seatResponseDTO = showService.getShowSeats(showId);
@@ -46,16 +45,15 @@ public class ShowController {
     }
 
     @GetMapping("/Get_By_City")
-    public ResponseEntity<List<ShowResponseDto>> getByCity(@RequestParam("city")String city){
-        List<ShowResponseDto> shows = showService.getByCity(city);
+    public ResponseEntity<List<ShowResponseDto>> getByCity(@RequestParam("city")String city, @RequestParam("movieName")String name){
+        List<ShowResponseDto> shows = showService.getByCity(city, name);
         return new ResponseEntity<>(shows, HttpStatus.OK);
     }
 
     @GetMapping("/Get_By_Date")
-    public ResponseEntity<List<ShowResponseDto>> getByDate(@RequestParam("ShowDate") LocalDate date, @RequestParam("city") String city){
-        List<ShowResponseDto> shows = showService.getByDateAndCity(date, city);
+    public ResponseEntity<List<ShowResponseDto>> getByDate(@RequestParam("ShowDate") LocalDate date, @RequestParam("city") String city
+            , @RequestParam("movieName")String name){
+        List<ShowResponseDto> shows = showService.getByDateAndCity(date, city, name);
         return new ResponseEntity<>(shows, HttpStatus.OK);
     }
-
-
 }
