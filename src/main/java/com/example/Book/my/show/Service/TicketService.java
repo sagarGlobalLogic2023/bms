@@ -2,6 +2,7 @@ package com.example.Book.my.show.Service;
 
 import com.example.Book.my.show.Repository.*;
 import com.example.Book.my.show.ReqDTOs.MovieResponceDto;
+import com.example.Book.my.show.ReqDTOs.ShowResponseDto;
 import com.example.Book.my.show.ReqDTOs.TicketDTO;
 import com.example.Book.my.show.models.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,8 +89,9 @@ public class TicketService {
 
     }
 
-    public TicketDTO getTicket(int id) {
+    public List<TicketDTO> getTicket(int id) {
         List<TicketEntity> tickets = ticketRepository.findAll();
+        List<TicketDTO> allTickets = new ArrayList<>();
         for (TicketEntity ticket : tickets) {
             if (ticket.getUser().getId() == id) {
                 List<String> allottedSeats = Arrays.asList(ticket.getAllotedSeats().split(",", 0));
@@ -99,10 +101,10 @@ public class TicketService {
                         .userId(ticket.getUser().getId())
                         .showId(ticket.getShow().getId())
                         .build();
-                return ticketDTO;
+                allTickets.add(ticketDTO);
             }
         }
-        return null;
+        return allTickets;
     }
 
     /*
