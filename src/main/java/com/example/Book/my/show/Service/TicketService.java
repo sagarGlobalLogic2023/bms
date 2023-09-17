@@ -4,6 +4,7 @@ import com.example.Book.my.show.Repository.*;
 import com.example.Book.my.show.ReqDTOs.MovieResponceDto;
 import com.example.Book.my.show.ReqDTOs.ShowResponseDto;
 import com.example.Book.my.show.ReqDTOs.TicketDTO;
+import com.example.Book.my.show.ReqDTOs.TicketResponseDTO;
 import com.example.Book.my.show.models.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -89,19 +90,21 @@ public class TicketService {
 
     }
 
-    public List<TicketDTO> getTicket(int id) {
+    public List<TicketResponseDTO> getTicket(int id) {
         List<TicketEntity> tickets = ticketRepository.findAll();
-        List<TicketDTO> allTickets = new ArrayList<>();
+        List<TicketResponseDTO> allTickets = new ArrayList<>();
         for (TicketEntity ticket : tickets) {
             if (ticket.getUser().getId() == id) {
                 List<String> allottedSeats = Arrays.asList(ticket.getAllotedSeats().split(",", 0));
-                TicketDTO ticketDTO = TicketDTO.builder()
-                        .allotedSeats(allottedSeats)
+                String movie = ticket.getShow().getMovie().getName();
+                TicketResponseDTO responseDTO = TicketResponseDTO.builder()
+                        .allottedSeats(allottedSeats)
                         .amount(ticket.getAmount())
                         .userId(ticket.getUser().getId())
                         .showId(ticket.getShow().getId())
+                        .movieName(movie)
                         .build();
-                allTickets.add(ticketDTO);
+                allTickets.add(responseDTO);
             }
         }
         return allTickets;

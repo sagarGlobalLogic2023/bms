@@ -2,6 +2,7 @@ package com.example.Book.my.show.Controllers;
 
 import com.example.Book.my.show.ReqDTOs.ShowResponseDto;
 import com.example.Book.my.show.ReqDTOs.TicketDTO;
+import com.example.Book.my.show.ReqDTOs.TicketResponseDTO;
 import com.example.Book.my.show.Service.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,8 +33,8 @@ public class TicketController {
 
     @GetMapping("/view_ticket")
     @PreAuthorize("hasAuthority('ROLE_USER')")
-    public ResponseEntity<List<TicketDTO>> viewTicket(@RequestParam("id") int id){
-        List<TicketDTO> tickets = ticketService.getTicket(id);
+    public ResponseEntity<List<TicketResponseDTO>> viewTicket(@RequestParam("id") int id){
+        List<TicketResponseDTO> tickets = ticketService.getTicket(id);
         return new ResponseEntity<>(tickets, HttpStatus.OK);
     }
 }
