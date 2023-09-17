@@ -134,15 +134,16 @@ public class ShowService {
 
         showEntity.setMovie(movie);
         showEntity.setTheater(theater);
+        showRepo.save(showEntity);
 
         movie.getListOfShows().add(showEntity);
         /*
         theater.getListOfSeats().add(showEntity);
         */
         movieRepo.save(movie);
-        theaterRepo.save(theater);
 
-        showRepo.save(showEntity);
+
+
 
         return "Show Successfully added";
     }
